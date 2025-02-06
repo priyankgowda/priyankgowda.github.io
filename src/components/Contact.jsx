@@ -1,5 +1,5 @@
 import { motion } from "framer-motion"
-import { FaGithub, FaGlobe, FaEnvelope, FaLinkedin } from "react-icons/fa"
+import { FaGithub, FaDiscord, FaEnvelope, FaLinkedin } from "react-icons/fa"
 
 const ContactLink = ({ href, icon: Icon, text, color }) => (
   <motion.a
@@ -57,27 +57,27 @@ const Contact = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 justify-items-center">
           <ContactLink
-            href="https://github.com/mmacneil"
+            href="https://github.com/priyankgowda"
             icon={FaGithub}
-            text="GITHUB.COM/MMACNEIL"
+            text="PRIYANKGOWDA"
             color="text-gray-900"
           />
           <ContactLink
-            href="https://fullstackmark.com"
-            icon={FaGlobe}
-            text="FULLSTACKMARK.COM"
-            color="text-emerald-500"
+            href="https://discord.com/"
+            icon={FaDiscord}
+            text="PRIYANKGOWDA19"
+            color="text-blue-500"
           />
           <ContactLink
-            href="mailto:markmacneil@gmail.com"
+            href="mailto:priyankgowdamr@gmail.com"
             icon={FaEnvelope}
-            text="MARKMACNEIL@GMAIL.COM"
-            color="text-emerald-500"
+            text="PRIYANKGOWDAMR@GMAIL.COM"
+            color="text-gray-500"
           />
           <ContactLink
-            href="https://linkedin.com/in/yourprofile"
+            href="https://linkedin.com/in/priyankgowda"
             icon={FaLinkedin}
-            text="LINKEDIN"
+            text="PRIYANKGOWDA"
             color="text-blue-500"
           />
         </div>
@@ -87,4 +87,3 @@ const Contact = () => {
 }
 
 export default Contact
-

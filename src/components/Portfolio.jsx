@@ -57,11 +57,11 @@ export default function Portfolio() {
         {/* Profile Section */}
         <div className="mt-5 flex flex-col items-center">
           <img
-            src="https://i.postimg.cc/d0Pj2KQC/me.jpg"
+            src="https://i.imgur.com/JZUYrG1.jpeg"
             alt="Profile"
             className="hidden sm:block w-24 h-24 md:w-28 md:h-28 rounded-full border-2 border-gray-400 object-cover"
           />
-          {isOpen && <h2 className="mt-2 text-lg font-bold text-center">Your Name</h2>}
+          {isOpen}
         </div>
 
         {/* Navigation Items */}
@@ -76,7 +76,7 @@ export default function Portfolio() {
             icon={<FileText />}
             text="Resume"
             isOpen={isOpen}
-            onClick={() => window.open("./assets/resume.pdf", "_blank")}
+            onClick={() => window.open("../assets/resume.pdf", "_blank")}
           />
         </div>
       </div>

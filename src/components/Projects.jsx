@@ -1,13 +1,16 @@
-import { motion } from "framer-motion"
-import { FaGithub } from "react-icons/fa"
+import { motion } from "framer-motion";
+import { FaGithub } from "react-icons/fa";
 
 const ProjectCard = ({ title, description, image, technologies, githubLink }) => (
-  <motion.div whileHover={{ scale: 1.02 }} className="bg-white rounded-lg shadow-lg overflow-hidden relative group">
+  <motion.div
+    whileHover={{ scale: 1.02 }}
+    className="bg-white rounded-lg shadow-lg overflow-hidden relative group flex flex-col"
+  >
     <img src={image || "/placeholder.svg"} alt={title} className="w-full h-48 object-cover" />
-    <div className="p-6">
+    <div className="p-6 flex-grow">
       <h3 className="font-bold text-xl mb-2">{title}</h3>
       <p className="text-gray-700 text-base mb-4">{description}</p>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap mb-4">
         {technologies.map((tech, index) => (
           <span
             key={index}
@@ -22,15 +25,15 @@ const ProjectCard = ({ title, description, image, technologies, githubLink }) =>
       href={githubLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="absolute bottom-4 right-4 bg-black text-white px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 flex items-center gap-2 hover:bg-gray-800"
-      whileHover={{ scale: 1.1 }}
+      className="absolute bottom-4 right-4 bg-black text-white px-4 py-2 rounded-full flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-gray-800"
+      whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <FaGithub />
+      <FaGithub size={18} />
       View on GitHub
     </motion.a>
   </motion.div>
-)
+);
 
 const Projects = () => {
   const projects = [
@@ -56,7 +59,7 @@ const Projects = () => {
       technologies: ["React", "Chart.js", "OpenWeatherMap API"],
       githubLink: "https://github.com/yourusername/weather-forecast-dashboard",
     },
-  ]
+  ];
 
   return (
     <motion.div
@@ -72,8 +75,7 @@ const Projects = () => {
         ))}
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default Projects
-
+export default Projects;
