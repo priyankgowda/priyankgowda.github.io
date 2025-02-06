@@ -47,7 +47,7 @@ const Home = () => {
         transition={{ delay: 0.5 }}
         className="text-xl text-gray-700 mb-8"
       >
-        Hi, I'm [Your Name]. I'm a {text}
+        Hi, I'm Priyank Gowda. I'm a {text}
       </motion.p>
       <motion.div
         initial={{ y: 50, opacity: 0 }}
@@ -56,13 +56,13 @@ const Home = () => {
         className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center"
       >
         <AnimatedButton
-          href="#contact"
+          href="#Contact"
           className="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300"
         >
           Contact Me
         </AnimatedButton>
         <AnimatedButton
-          href="#about"
+          href="#About"
           className="bg-gray-600 text-white px-6 py-3 rounded-full hover:bg-gray-700 transition duration-300"
         >
           Read More
@@ -70,7 +70,7 @@ const Home = () => {
         <AnimatedButton
           href="/path-to-your-resume.pdf"
           target="_blank"
-          rel="noopener noreferrer"
+          rel="./assets/resume.pdf"
           className="bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-gray-900 transition duration-300"
         >
           Resume

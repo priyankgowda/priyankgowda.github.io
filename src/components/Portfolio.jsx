@@ -76,7 +76,7 @@ export default function Portfolio() {
             icon={<FileText />}
             text="Resume"
             isOpen={isOpen}
-            onClick={() => window.open("/path-to-your-resume.pdf", "_blank")}
+            onClick={() => window.open("./assets/resume.pdf", "_blank")}
           />
         </div>
       </div>
