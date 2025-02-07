@@ -1,8 +1,11 @@
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import RotatingText from './RotatingText';
-// Import if using React Router
-// import { Link } from 'react-router-dom';
+"use client"
+
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons"
+import { faFileAlt } from "@fortawesome/free-solid-svg-icons"
+import RotatingText from "./RotatingText"
 
 const AnimatedButton = ({ onClick, className, children }) => (
   <motion.button
@@ -13,51 +16,37 @@ const AnimatedButton = ({ onClick, className, children }) => (
   >
     {children}
   </motion.button>
-);
+)
 
 const Home = () => {
-  const [displayText, setDisplayText] = useState("");
-  const [isTypingComplete, setIsTypingComplete] = useState(false);
-  const [showRotatingText, setShowRotatingText] = useState(false);
-  const [showButtons, setShowButtons] = useState(false);
-  const fullText = "Hi, I'm Priyank Gowda.";
-
-  const handleContactClick = () => {
-    // Add your contact logic here
-    console.log("Contact button clicked");
-    // You could scroll to a contact section
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const handleResumeClick = () => {
-    // Add your resume download/view logic here
-    console.log("Resume button clicked");
-    // You could open resume in new tab
-    window.open('/path-to-your-resume.pdf', '_blank');
-  };
+  const [displayText, setDisplayText] = useState("")
+  const [isTypingComplete, setIsTypingComplete] = useState(false)
+  const [showRotatingText, setShowRotatingText] = useState(false)
+  const [showButtons, setShowButtons] = useState(false)
+  const fullText = "Hi, I'm Priyank Gowda."
 
   useEffect(() => {
-    let index = 0;
-    setDisplayText(""); // Reset the text initially
-    
+    let index = 0
+    setDisplayText("") // Reset the text initially
+
     const interval = setInterval(() => {
       if (index < fullText.length) {
-        setDisplayText(fullText.slice(0, index + 1));
-        index++;
+        setDisplayText(fullText.slice(0, index + 1))
+        index++
       } else {
-        clearInterval(interval);
-        setIsTypingComplete(true);
+        clearInterval(interval)
+        setIsTypingComplete(true)
         setTimeout(() => {
-          setShowRotatingText(true);
+          setShowRotatingText(true)
           setTimeout(() => {
-            setShowButtons(true);
-          }, 500);
-        }, 500);
+            setShowButtons(true)
+          }, 500)
+        }, 500)
       }
-    }, 100);
+    }, 100)
 
-    return () => clearInterval(interval);
-  }, []);
+    return () => clearInterval(interval)
+  }, [])
 
   return (
     <motion.div
@@ -85,7 +74,7 @@ const Home = () => {
           >
             I'm a&nbsp;
             <RotatingText
-              texts={['Full Stack Developer', 'Pythonist', 'AI/ML Enthusiast', 'Data Scientist']}
+              texts={["Full Stack Developer", "Pythonist", "AI/ML Enthusiast", "Data Scientist"]}
               mainClassName="px-2 sm:px-2 md:px-3 bg-cyan-300 text-black overflow-hidden py-0.5 sm:py-1 md:py-2 justify-center rounded-lg"
               staggerFrom={"last"}
               initial={{ y: "100%" }}
@@ -106,25 +95,31 @@ const Home = () => {
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="space-y-4 md:space-y-0 md:space-x-4 flex flex-col md:flex-row items-center"
+            className="flex flex-wrap gap-4 justify-center"
           >
             <AnimatedButton
-              onClick={handleContactClick}
-              className="bg-blue-500 text-white px-6 py-3 rounded-full hover:bg-blue-600 transition duration-300 cursor-pointer"
+              onClick={() => window.open("https://www.linkedin.com/in/priyankgowda", "_blank")}
+              className="w-14 h-14 bg-white text-[#0077b5] rounded-full hover:bg-[#0077b5] hover:text-white transition duration-300 flex items-center justify-center"
             >
-              Contact Me
+              <FontAwesomeIcon icon={faLinkedin} size="2x" />
             </AnimatedButton>
             <AnimatedButton
-              onClick={handleResumeClick}
-              className="bg-gray-800 text-white px-6 py-3 rounded-full hover:bg-gray-900 transition duration-300 cursor-pointer"
+              onClick={() => window.open("https://www.github.com/priyankgowda", "_blank")}
+              className="w-14 h-14 bg-white text-black rounded-full hover:bg-black hover:text-white transition duration-300 flex items-center justify-center"
             >
-              Resume
+              <FontAwesomeIcon icon={faGithub} size="2x" />
+            </AnimatedButton>
+            <AnimatedButton
+              onClick={() => window.open("https://drive.google.com/file/d/1Co3nggC12EBberLzGA9yAmnnTpfBHb04/view?usp=drivesdk", "_blank")}
+              className="w-14 h-14 bg-white text-gray-700 rounded-full hover:bg-gray-700 hover:text-white transition duration-300 flex items-center justify-center"
+            >
+              <FontAwesomeIcon icon={faFileAlt} size="2x" />
             </AnimatedButton>
           </motion.div>
         )}
       </AnimatePresence>
     </motion.div>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home

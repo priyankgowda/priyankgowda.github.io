@@ -1,5 +1,5 @@
-import { motion } from "framer-motion"
-import { FaGraduationCap, FaUniversity, FaSchool } from "react-icons/fa"
+import { motion } from "framer-motion";
+import { FaGraduationCap, FaUniversity, FaSchool } from "react-icons/fa";
 
 const TimelineItem = ({ year, degree, institution, description, icon: Icon }) => (
   <motion.div
@@ -19,32 +19,32 @@ const TimelineItem = ({ year, degree, institution, description, icon: Icon }) =>
       <p className="text-sm font-semibold text-gray-600 mt-2">{year}</p>
     </motion.div>
   </motion.div>
-)
+);
 
 const Education = () => {
   const educationHistory = [
     {
-      year: "2022",
-      degree: "Master's in Computer Science",
-      institution: "University of Technology",
-      description: "Focused on advanced algorithms and machine learning.",
+      year: "2021 - 2025",
+      degree: "B.Tech in Artificial Intelligence & Machine Learning",
+      institution: "BGS Institute of Technology, Mandya",
+      description: "Studying AI, ML, full-stack development, and problem-solving.",
       icon: FaGraduationCap,
     },
     {
-      year: "2020",
-      degree: "Bachelor's in Software Engineering",
-      institution: "State University",
-      description: "Learned fundamentals of software development and project management.",
+      year: "2019 - 2021",
+      degree: "Pre-University (Science - PCM)",
+      institution: "Mandavya PU College, Mandya",
+      description: "Focused on Physics, Chemistry, and Mathematics.",
       icon: FaUniversity,
     },
     {
-      year: "2016",
-      degree: "High School Diploma",
-      institution: "City High School",
-      description: "Excelled in mathematics and computer science courses.",
+      year: "2019",
+      degree: "10th Grade (NCERT)",
+      institution: "Geethanjali High School, Mandya",
+      description: "Completed secondary education with a strong interest in technology.",
       icon: FaSchool,
     },
-  ]
+  ];
 
   return (
     <motion.div
@@ -66,8 +66,7 @@ const Education = () => {
         </div>
       </div>
     </motion.div>
-  )
-}
+  );
+};
 
-export default Education
-
+export default Education;
