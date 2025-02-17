@@ -1,81 +1,78 @@
+import React from "react";
 import { motion } from "framer-motion";
-import { FaGithub } from "react-icons/fa";
+import { Github } from "lucide-react";
 
-const ProjectCard = ({ title, description, image, technologies, githubLink }) => (
-  <motion.div
-    whileHover={{ scale: 1.02 }}
-    className="bg-white rounded-lg shadow-lg overflow-hidden relative group flex flex-col"
-  >
-    <img src={image || "/placeholder.svg"} alt={title} className="w-full h-48 object-cover" />
-    <div className="p-6 flex-grow">
-      <h3 className="font-bold text-xl mb-2">{title}</h3>
-      <p className="text-gray-700 text-base mb-4">{description}</p>
-      <div className="flex flex-wrap mb-4">
-        {technologies.map((tech, index) => (
-          <span
-            key={index}
-            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-          >
-            {tech}
-          </span>
-        ))}
-      </div>
-    </div>
-    <motion.a
-      href={githubLink}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="absolute bottom-4 right-4 bg-black text-white px-4 py-2 rounded-full flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300 hover:bg-gray-800"
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-    >
-      <FaGithub size={18} />
-      View on GitHub
-    </motion.a>
-  </motion.div>
-);
+const projects = [
+  {
+    title: "Project 1",
+    description: "A brief description of Project 1",
+    tags: ["React", "TypeScript", "Tailwind"],
+    githubUrl: "https://github.com/yourusername/project1",
+    imageUrl: "/placeholder.svg?height=400&width=600",
+  },
+  {
+    title: "Project 2",
+    description: "A brief description of Project 2",
+    tags: ["Next.js", "GraphQL", "Framer Motion"],
+    githubUrl: "https://github.com/yourusername/project2",
+    imageUrl: "/placeholder.svg?height=400&width=600",
+  },
+  {
+    title: "Project 3",
+    description: "A brief description of Project 3",
+    tags: ["React Native", "Expo", "Firebase"],
+    githubUrl: "https://github.com/yourusername/project3",
+    imageUrl: "/placeholder.svg?height=400&width=600",
+  },
+];
 
-const Projects = () => {
-  const projects = [
-    {
-      title: "E-commerce Platform",
-      description:
-        "A full-stack e-commerce solution with user authentication, product management, and payment integration.",
-      image: "https://via.placeholder.com/300x150",
-      technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-      githubLink: "https://github.com/yourusername/e-commerce-platform",
-    },
-    {
-      title: "Task Management App",
-      description: "A responsive web application for managing tasks and projects with real-time updates.",
-      image: "https://via.placeholder.com/300x150",
-      technologies: ["React", "Firebase", "Material-UI"],
-      githubLink: "https://github.com/yourusername/task-management-app",
-    },
-    {
-      title: "Weather Forecast Dashboard",
-      description: "An interactive dashboard displaying weather forecasts using data from a third-party API.",
-      image: "https://via.placeholder.com/300x150",
-      technologies: ["React", "Chart.js", "OpenWeatherMap API"],
-      githubLink: "https://github.com/yourusername/weather-forecast-dashboard",
-    },
-  ];
-
+export default function ProjectsPage() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1 }}
-      className="min-h-screen bg-gray-100 p-8"
-    >
-      <h1 className="text-4xl font-bold mb-6">My Projects</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {projects.map((project, index) => (
-          <ProjectCard key={index} {...project} />
-        ))}
-      </div>
-    </motion.div>
-  );
-};
+    <main className="min-h-screen bg-white">
+      <div className="container mx-auto px-4 py-8">
+        <h2 className="text-2xl font-bold mb-6 text-black">My Projects</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {projects.map((project, index) => (
+            <motion.div
+              key={index}
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+              className="relative group"
+            >
+              <div className="h-full overflow-hidden transition-shadow hover:shadow-lg bg-white rounded-2xl border border-gray-300">
+                {/* White Blur Effect on Hover */}
+                <div className="absolute inset-0 bg-white bg-opacity-40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 rounded-2xl backdrop-blur-md">
+                  <button
+                    className="bg-black text-white px-4 py-2 rounded-xl hover:bg-gray-800 flex items-center text-xs sm:text-sm md:text-base cursor-pointer"
+                    onClick={() => window.open(project.githubUrl, "_blank")}
+                  >
+                    <Github className="mr-2 h-4 w-4" />
+                    <span className="hidden sm:inline">View on GitHub</span>
+                    <span className="sm:hidden">View</span>
+                  </button>
+                </div>
 
-export default Projects;
+                <div className="group-hover:blur-sm transition-all duration-300 rounded-2xl">
+                  <div className="relative h-48 w-full">
+                    <img src={project.imageUrl} alt={project.title} className="w-full h-full object-cover rounded-t-2xl" />
+                  </div>
+                  <div className="p-4">
+                    <h3 className="text-lg font-bold text-black">{project.title}</h3>
+                    <p className="text-gray-600 text-sm mb-2">{project.description}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="bg-gray-200 text-xs px-2 py-1 rounded-md text-black">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </main>
+  );
+}
