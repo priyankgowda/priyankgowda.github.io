@@ -4,11 +4,11 @@ import { Github } from "lucide-react";
 
 const projects = [
   {
-    title: "Project 1",
-    description: "A brief description of Project 1",
-    tags: ["React", "TypeScript", "Tailwind"],
-    githubUrl: "https://github.com/yourusername/project1",
-    imageUrl: "/placeholder.svg?height=400&width=600",
+    "title": "Intruder Detection and Alerting System",
+    "description": "A machine learning-based system that detects intruders using computer vision, recognizes known faces, and sends alerts via Telegram.",
+    "tags": ["Python", "OpenCV", "Machine Learning", "Computer Vision", "Flask"],
+    "githubUrl": "https://github.com/priyankgowda/intruder-detection-and-alerting-system",
+    "imageUrl": "/intruder-detection-preview.png"
   },
   {
     title: "Project 2",
