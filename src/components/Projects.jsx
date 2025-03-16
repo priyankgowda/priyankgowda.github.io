@@ -8,7 +8,7 @@ const projects = [
     "description": "A machine learning-based system that detects intruders using computer vision, recognizes known faces, and sends alerts via Telegram.",
     "tags": ["Python", "OpenCV", "Machine Learning", "Computer Vision", "Flask"],
     "githubUrl": "https://github.com/priyankgowda/intruder-detection-and-alerting-system",
-    "imageUrl": "./assets/intruder.png"
+    "imageUrl": "https://i.ibb.co/Vr5HTdM/intruder.jpg"
   },
   {
     title: "Project 2",
