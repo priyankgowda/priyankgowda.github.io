@@ -1,14 +1,486 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <base href="/">
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/d0Pj2KQC/me.jpg">
-    <title>Priyank Gowda | Software Developer</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Priyank Gowda — Backend Developer (FastAPI • PostgreSQL • AWS • LangGraph)</title>
+  <meta name="description" content="Backend portfolio of Priyank Gowda showcasing FastAPI, PostgreSQL, AWS, Docker, CI/CD and LangGraph projects." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0f14;           /* page background */
+      --panel:#0f1620;        /* card background */
+      --panel-2:#101827;      /* alt card bg */
+      --text:#e5e7eb;         /* text */
+      --muted:#9aa4b2;        /* secondary text */
+      --brand:#7c3aed;        /* accent */
+      --brand-2:#06b6d4;      /* accent 2 */
+      --ok:#22c55e; --warn:#f59e0b; --err:#ef4444;
+      --ring: 0 0 0 4px rgba(124,58,237,.15);
+      --radius:16px; --radius-sm:12px; --radius-lg:28px;
+      --shadow: 0 8px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:radial-gradient(1200px 800px at 80% -10%, rgba(124,58,237,.18), transparent 40%),
+                              radial-gradient(900px 600px at -10% 120%, rgba(6,182,212,.12), transparent 40%), var(--bg);
+               color:var(--text);font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial,sans-serif;}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    /* NAV */
+    .nav{position:sticky;top:0;z-index:50;background:rgba(11,15,20,.65);backdrop-filter:blur(10px);border-bottom:1px solid #1f2937}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;height:64px}
+    .brand{display:flex;align-items:center;gap:12px;font-weight:700;letter-spacing:.2px}
+    .brand .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2))}
+    .menu{display:flex;gap:18px}
+    .menu a{padding:8px 12px;border-radius:10px;color:var(--muted);font-weight:500}
+    .menu a.active,.menu a:hover{color:var(--text);background:#0f172a}
+    .cta{display:flex;gap:10px}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:12px;border:1px solid #263244;background:#0e1522;color:var(--text);font-weight:600;box-shadow:inset 0 0 0 1px rgba(124,58,237,.2)}
+    .btn.primary{background:linear-gradient(135deg,var(--brand),var(--brand-2));border:none}
+
+  /* HERO */
+  /* Reduced top padding so hero sits closer under the sticky navbar */
+  .hero{padding:28px 0 24px}
+    .hero-wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:28px;align-items:center}
+    .title{font-size:clamp(28px,4.2vw,48px);line-height:1.1;font-weight:800;letter-spacing:.3px}
+    .title .accent{background:linear-gradient(135deg,var(--brand),var(--brand-2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .subtitle{color:var(--muted);font-size:clamp(14px,1.6vw,18px);margin-top:10px}
+    .badges{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 26px}
+    .pill{border:1px solid #293446;background:#0f1624;padding:8px 12px;border-radius:999px;font-size:13px;display:inline-flex;gap:8px;align-items:center}
+    .kbd{font-family:"JetBrains Mono",ui-monospace,monospace;background:#0a1220;padding:2px 6px;border-radius:6px;border:1px solid #1f2a3a}
+    .hero-card{background:linear-gradient(180deg,rgba(124,58,237,.12),transparent 40%),var(--panel);border:1px solid #262e3f;border-radius:var(--radius-lg);padding:22px;box-shadow:var(--shadow)}
+    .hero-code{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:12.5px;line-height:1.6;background:#0b1322;border-radius:14px;border:1px solid #1f2a3a;padding:16px;overflow:auto}
+
+    /* SECTION */
+    section{padding:44px 0}
+    .section-title{font-size:20px;text-transform:uppercase;letter-spacing:.22em;color:var(--muted);margin:4px 0 18px}
+
+    /* SKILLS GRID */
+    .grid{display:grid;gap:18px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:900px){.hero-wrap{grid-template-columns:1fr}.grid.cols-3{grid-template-columns:repeat(2,1fr)}}
+    @media (max-width:640px){.grid.cols-3,.grid.cols-2{grid-template-columns:1fr}}
+    /* Mobile nav fixes: avoid forcing a horizontal page scrollbar when the menu is long */
+    @media (max-width:900px) {
+      .nav-inner {padding:0 12px}
+      .menu {display:flex; gap:12px; flex-wrap:nowrap; overflow-x:auto; -webkit-overflow-scrolling:touch}
+      .menu a {white-space:nowrap;}
+      /* hide native scrollbar visuals while keeping scrolling usable */
+      .menu { -ms-overflow-style: none; scrollbar-width: none; }
+      .menu::-webkit-scrollbar { display: none; height: 6px; }
+    }
+    .card{background:var(--panel);border:1px solid #1e2736;border-radius:var(--radius);padding:18px;box-shadow:var(--shadow)}
+    .card h3{margin:0 0 8px;font-size:18px}
+    .stack{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{background:#0b1322;border:1px solid #1f2a3a;color:#d1d5db;border-radius:999px;padding:6px 10px;font-size:12.5px}
+
+  /* PROJECTS */
+  .project{display:grid;grid-template-columns:1fr .8fr;gap:18px;align-items:start}
+  .project + .project{margin-top:18px}
+  @media(max-width:900px){.project{grid-template-columns:1fr}}
+  /* layout container for project cards: two columns down to 640px, then stack */
+  .projects-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:stretch;grid-auto-rows:1fr}
+  /* allow project cards to shrink inside the grid cell so both fit on one row */
+  .projects-grid .project.card{width:100%;min-width:0}
+  /* remove top margin between projects when using the grid so items align */
+  .projects-grid .project + .project{margin-top:0}
+  @media(max-width:640px){.projects-grid{grid-template-columns:1fr}}
+  .callout{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+
+   /* Ensure each project card fills its grid cell and both cards match height.
+     Use flex column for cards inside the projects grid so we don't create
+     an empty second column when content isn't present. */
+  .projects-grid .project.card{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;height:100%;padding:18px}
+  /* Make the immediate content a column flex and allow it to grow so links stay at the bottom */
+  .projects-grid .project.card > div{display:flex;flex-direction:column;flex:1}
+  .projects-grid .project.card .links{margin-top:0}
+
+  /* CONTACT: make "Let's chat" card 60% width on desktop and center its contents */
+  #contact .card{width:50%;max-width:none;margin:0 auto;padding:14px;text-align:center}
+  /* center the row buttons inside the contact card */
+  #contact .card .row{justify-content:center}
+  /* ensure inline elements like .kbd-inline center properly */
+  #contact .card .kbd-inline{display:inline-block}
+  @media (max-width:640px){
+    /* mobile: full width and left-aligned for readability */
+    #contact .card{width:auto;max-width:none;margin:0;padding:14px;text-align:left}
+    #contact .card .row{justify-content:flex-start}
+  }
+
+    /* TIMELINE */
+    .timeline{position:relative;padding-left:24px}
+    .timeline:before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:#223046}
+    .t-item{position:relative;margin:0 0 14px;padding:12px 14px;border-radius:14px;background:var(--panel-2);border:1px solid #1f2a3a}
+    .t-item:before{content:"";position:absolute;left:-3px;top:16px;width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,var(--brand),var(--brand-2));box-shadow:0 0 0 3px rgba(124,58,237,.2)}
+
+    /* TIMELINE CORE (extended) */
+    .timeline {position:relative;margin-top:20px;padding:20px 0;width:75%;margin-left:25%;
+      --line-x: 28px; --line-w: 3px; --pin-size: 28px; --gap: 28px;
+    }
+    .timeline:before {content:"";position:absolute;left:var(--line-x);top:0;bottom:0;width:var(--line-w);background:#223046;}
+
+    .t-item {position:relative; 
+      width: calc(80% - (var(--line-x) + var(--gap) + 6px)); /* Reduced card width */
+      margin-left: calc(var(--line-x) + var(--gap));
+      padding:18px;margin-bottom:28px;background:var(--panel);border:1px solid #1f2a3a;border-radius:var(--radius);box-shadow:var(--shadow);
+      text-align:center;opacity:0;transform:translateY(30px);transition:all .6s ease-in-out;
+    }
+    .t-item.visible {opacity:1;transform:translateY(0);} 
+    .t-item:before {content:"\2713";
+      position:absolute;top:50%;
+      left: calc( -1 * var(--gap) - (var(--pin-size)/2) + (var(--line-w)/2) );
+      transform:translateY(-50%);
+      width:var(--pin-size);height:var(--pin-size);border-radius:50%;display:flex;align-items:center;justify-content:center;
+      background:linear-gradient(135deg,var(--brand),var(--brand-2));color:#fff;font-weight:700;
+      box-shadow:0 0 0 4px rgba(124,58,237,.2)
+    }
+    .t-item h3 {margin:0;font-size:18px;font-weight:700;}
+    .t-item p {margin:6px 0;font-size:15px;color:var(--muted);}
+    .t-item small {Color:var(--muted);font-size:13px;}
+
+    /* Section-specific icons */
+    .timeline.education .t-item:before {content:"\1F393";} /* 🎓 */
+    .timeline.experience .t-item:before {content:"\1F4BC";} /* 💼 */
+
+    /* Responsive tweaks */
+    @media (max-width: 640px) {
+      .timeline {width:100%;margin-left:0;--line-x: 18px; --gap: 18px; --pin-size: 24px;}
+      .t-item {padding:16px;width:80%;}
+      .t-item h3{font-size:16px}
+      .t-item p{font-size:14px}
+    }
+
+    /* LANGGRAPH DIAGRAM */
+    .diagram{background:#0b1322;border:1px solid #1f2a3a;border-radius:16px;padding:14px;overflow:auto}
+    .svg{width:100%;min-height:220px}
+
+    /* FOOTER */
+    footer{padding:30px 0;color:#aab2bf;border-top:1px solid #1f2937}
+
+    /* UTIL */
+    .muted{color:var(--muted)}
+    .mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .copy{cursor:pointer}
+    .copy:hover{opacity:.85}
+    .kbd-inline{border:1px solid #1f2a3a;border-radius:8px;padding:2px 8px;background:#0b1322}
+    .notice{border-left:3px solid var(--brand);padding:10px 12px;border-radius:12px;background:#0f1624}
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="#home"><span class="dot"></span> Priyank Gowda</a>
+      <div class="menu">
+        <a href="#skills" class="active">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="cta">
+        <a class="btn" href="https://github.com/priyankgowda" target="_blank" rel="noreferrer">GitHub</a>
+        <a class="btn primary" href="https://linkedin.com/in/priyankgowda" target="_blank" rel="noreferrer">LinkedIn</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header id="home" class="hero">
+    <div class="container hero-wrap">
+      <div>
+        <h1 class="title">Backend Developer building reliable APIs with <span class="accent">FastAPI</span>, <span class="accent">PostgreSQL</span>, and <span class="accent">AWS</span>.</h1>
+        <p class="subtitle">I ship production‑ready services: typed Python, robust data models, async I/O, observability, CI/CD and containerized deployments. I also design agentic workflows with <span class="accent">LangGraph</span>.</p>
+        <div class="badges">
+          <span class="pill">FastAPI <span class="kbd">/</span> Pydantic v2</span>
+          <span class="pill">PostgreSQL • SQLModel</span>
+          <span class="pill">Docker • GitHub Actions</span>
+          <span class="pill">AWS (EC2 • S3 • RDS)</span>
+          <span class="pill">Redis • Celery</span>
+          <span class="pill">Auth • JWT • OAuth2</span>
+          <span class="pill">Testing • Pytest</span>
+          <span class="pill">Tracing • Prometheus • Grafana</span>
+        </div>
+        <div class="row">
+          <a class="btn primary" href="#projects">See Projects</a>
+          <a class="btn" href="#contact">Hire Me</a>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="row" style="justify-content:space-between;align-items:center;margin-bottom:10px">
+          <strong class="mono">curl ▶ health</strong>
+        </div>
+        <pre class="hero-code" id="curl-code">curl -X GET https://api.priyank.dev/health</pre>
+        <div class="row" style="margin-top:10px">
+          <button class="btn copy" data-target="#curl-code">Copy cURL</button>
+          <button class="btn" id="run-demo">Run Mock</button>
+        </div>
+        <pre class="hero-code" id="demo-output" aria-live="polite" style="margin-top:10px">{}</pre>
+      </div>
+    </div>
+  </header>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="container">
+      <div class="section-title">Core Skills</div>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>API & Services</h3>
+          <div class="stack">
+            <span class="tag">FastAPI</span>
+            <span class="tag">Pydantic v2</span>
+            <span class="tag">AsyncIO</span>
+            <span class="tag">Uvicorn/Gunicorn</span>
+            <span class="tag">WebSockets</span>
+            <span class="tag">REST • OpenAPI</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Data & Storage</h3>
+          <div class="stack">
+            <span class="tag">PostgreSQL</span>
+            <span class="tag">SQLAlchemy/SQLModel</span>
+            <span class="tag">Alembic</span>
+            <span class="tag">Redis</span>
+            <span class="tag">S3 (buckets)</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Infra & Ops</h3>
+          <div class="stack">
+            <span class="tag">Docker</span>
+            <span class="tag">GitHub Actions</span>
+            <span class="tag">AWS EC2/RDS/S3</span>
+            <span class="tag">Nginx</span>
+            <span class="tag">Prometheus/Grafana</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Messaging & Jobs</h3>
+          <div class="stack">
+            <span class="tag">Celery</span>
+            <span class="tag">RQ</span>
+            <span class="tag">APScheduler</span>
+            <span class="tag">Webhooks</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Security</h3>
+          <div class="stack">
+            <span class="tag">JWT & OAuth2</span>
+            <span class="tag">CORS</span>
+            <span class="tag">Rate‑limit</span>
+            <span class="tag">Secrets Manager</span>
+            <span class="tag">Validation</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>AI & Agents</h3>
+          <div class="stack">
+            <span class="tag">LangGraph</span>
+            <span class="tag">LangChain</span>
+            <span class="tag">OpenAI APIs</span>
+            <span class="tag">Vector DB</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-title">Selected Projects</div>
+
+  <!-- grid wrapper so projects can be 2-up on desktop and 1-up on mobile -->
+  <div class="projects-grid">
+
+  <div class="project card">
+        <div>
+          <h3>Intruder Detection & Alerting (CV + FastAPI)</h3>
+          <p class="callout">Edge‑friendly computer vision service that classifies faces as <strong>known</strong> vs <strong>unknown</strong>, streams events, and pushes Telegram alerts. Retraining can be triggered via admin webhook.</p>
+          <ul class="callout">
+            <li>FastAPI service with async endpoints, streaming logs, and signed S3 uploads.</li>
+            <li>PostgreSQL for audit trails and label metadata. Redis + Celery for background jobs.</li>
+            <li>Dockerized; GitHub Actions build → push; deploy on AWS EC2 behind Nginx.</li>
+          </ul>
+          <div class="links">
+            <a class="btn" href="https://github.com/priyankgowda/intruder-detection-and-alerting-system" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+        
+      </div>
+
+  <div class="project card">
+        <div>
+          <h3>URL Shortener API (FastAPI + PostgreSQL)</h3>
+          <p class="callout">A production‑ready template: rate‑limited create/resolve endpoints, Alembic migrations, OpenAPI docs, and GitHub Actions CI.</p>
+          <ul class="callout">
+            <li>Hashids + custom slug; unique check with <span class="mono">INSERT ... ON CONFLICT</span>.</li>
+            <li>Metrics exported to Prometheus; JSON‑structured logs.</li>
+            <li>Docker Compose for local dev: app, db, redis.</li>
+          </ul>
+        </div>
+        
+      </div>
+  </div>
+
+    </div>
+  </section>
+
+  
+
+  <!-- EXPERIENCE TIMELINE -->
+  <section id="experience">
+    <div class="container">
+      <div class="section-title">Work Experience</div>
+      <div class="timeline experience">
+        <div class="t-item">
+          <h3>Software Development Engineer</h3>
+          <p>LOBB Logistics</p>
+          <small>Aug 2025 – Present</small>
+        </div>
+        <div class="t-item">
+          <h3>Python Backend Intern</h3>
+          <p>LOBB Logistics</p>
+          <small>Jun 2025 – Aug 2025 (3 months)</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION TIMELINE -->
+  <section id="education">
+    <div class="container">
+      <div class="section-title">Education</div>
+      <div class="timeline education">
+        <div class="t-item">
+          <h3>B.Tech in Artificial Intelligence & Machine Learning</h3>
+          <p>BGS Institute of Technology, Mandya</p>
+          <small>2021 – 2025</small>
+        </div>
+        <div class="t-item">
+          <h3>Pre-University (Science - PCM)</h3>
+          <p>Mandavya PU College, Mandya</p>
+          <small>2019 – 2021</small>
+        </div>
+        <div class="t-item">
+          <h3>10th Grade (NCERT)</h3>
+          <p>Geethanjali High School, Mandya</p>
+          <small>2019</small>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-title">Contact</div>
+      <div class="grid cols-1">
+        <div class="card">
+          <h3>Let's chat</h3>
+          <p class="muted">Email: <a href="mailto:priyankgowdamr@gmail.com">priyankgowdamr@gmail.com</a></p>
+          <p class="muted">LinkedIn: <a href="https://linkedin.com/in/priyankgowda" target="_blank" rel="noreferrer">priyankgowda</a></p>
+          <p class="muted">Discord: <span class="kbd-inline">PRIYANKGOWDA19</span></p>
+          <div class="row">
+            <a class="btn" href="https://drive.google.com/file/d/1Co3nggC12EBberLzGA9yAmnnTpfBHb04/view?usp=drivesdk" target="_blank" rel="noreferrer">Resume</a>
+            <a class="btn" href="https://github.com/priyankgowda" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> Priyank Gowda. Built with FastAPI love and dark‑mode aesthetics.
+    </div>
+  </footer>
+
+  <script>
+    // Active menu highlighting & smooth scroll for all internal anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click',e=>{
+        const id=a.getAttribute('href');
+        const el=document.querySelector(id);
+        if(el){
+          e.preventDefault();
+          // compute scroll position with navbar offset so content isn't hidden under sticky nav
+          const nav = document.querySelector('.nav');
+          const navHeight = nav ? nav.offsetHeight : 0;
+          const offset = 8; // small gap under navbar
+          const top = el.getBoundingClientRect().top + window.scrollY - navHeight - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+          // if the clicked link is part of the nav menu, update active class immediately
+          if(a.closest('.menu')){
+            document.querySelectorAll('.menu a').forEach(l=> l.classList.toggle('active', l.getAttribute('href')===id));
+          }
+        }
+      });
+    });
+    const setActive=()=>{
+      const pos=window.scrollY+90; let current='';
+      document.querySelectorAll('section,header').forEach(sec=>{ if(pos>=sec.offsetTop) current='#'+(sec.id||'home'); });
+      document.querySelectorAll('.menu a').forEach(l=>{ l.classList.toggle('active', l.getAttribute('href')===current ); });
+    }; setActive(); window.addEventListener('scroll',setActive);
+
+    // Copy cURL
+    document.querySelectorAll('.copy').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        const target=document.querySelector(btn.dataset.target);
+        if(!target) return; const text=target.innerText;
+        navigator.clipboard.writeText(text).then(()=>{btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy cURL',1200)});
+      });
+    });
+
+    // Demo runner (mock)
+    document.getElementById('run-demo').addEventListener('click',()=>{
+      const out=document.getElementById('demo-output');
+      const payload={ status:'ok', service:'api.priyank.dev', version:'v1', db:'postgres: healthy', redis:'healthy', time:new Date().toISOString() };
+      out.textContent=JSON.stringify(payload,null,2);
+    });
+
+    // Contact form → mailto (guarded)
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+      contactForm.addEventListener('submit',function(e){
+        e.preventDefault();
+        const name=this.name.value.trim();
+        const email=this.email.value.trim();
+        const msg=this.message.value.trim();
+        const subject=encodeURIComponent(`[Portfolio] Message from ${name}`);
+        const body=encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${msg}`);
+        window.location.href=`mailto:priyankgowdamr@gmail.com?subject=${subject}&body=${body}`;
+        // if form-status exists update it, otherwise ignore
+        const status = document.getElementById('form-status'); if(status) status.textContent='Opening your email client…';
+        this.reset();
+      });
+    }
+
+    // Year
+    document.getElementById('year').textContent=new Date().getFullYear();
+  </script>
+  <script>
+    // Scroll animation for timeline cards
+    const items = document.querySelectorAll('.t-item');
+    const revealOnScroll = () => {
+      const trigger = window.innerHeight * 0.85;
+      items.forEach(item => {
+        const top = item.getBoundingClientRect().top;
+        if (top < trigger) item.classList.add('visible');
+      });
+    };
+    window.addEventListener('scroll', revealOnScroll);
+    window.addEventListener('load', revealOnScroll);
+  </script>
+</body>
 </html>
